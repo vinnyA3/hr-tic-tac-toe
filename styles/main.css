@@ -1,0 +1,16 @@
+.board {
+  margin: 0 auto;
+  width: 60%;
+  height: 20em;
+  display: flex;
+  justify-content: center;
+  flex-flow: row nowrap;
+  align-items: center;
+  border: 5px solid black;
+}
+
+.board > div {
+  flex: 0 0 33.3%;
+  display: flex;
+  border: 1px solid black;
+}
