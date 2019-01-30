@@ -1,16 +1,38 @@
-.board {
-  margin: 0 auto;
-  width: 60%;
-  height: 20em;
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
   display: flex;
   justify-content: center;
-  flex-flow: row nowrap;
   align-items: center;
-  border: 5px solid black;
 }
 
-.board > div {
-  flex: 0 0 33.3%;
+.board {
+  margin: 0 auto;
+  width: 50%;
+  height: 75%;
+  display: flex;
+  flex-flow: row wrap;
+  border: 3px solid black;
+  overflow: hidden;
+}
+
+.row {
+  flex: 0 0 100%;
   display: flex;
   border: 1px solid black;
+}
+
+.row div {
+  position: relative;
+  height: 100%;
+  flex: 0 0 33.3333%;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-size: 2em;
+  font-weight: bold;
+  cursor: pointer;
 }
