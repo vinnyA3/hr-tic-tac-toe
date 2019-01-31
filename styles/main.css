@@ -22,7 +22,7 @@ body {
 
 /* Grid */
 .board > * + * {
-  border-top: 5px solid #fff;
+  border-top: 5px solid #f4f7f7;
 }
 
 .row {
@@ -32,7 +32,7 @@ body {
 
 /* Grid */
 .row > * + * {
-  border-left: 5px solid #fff;
+  border-left: 5px solid #f4f7f7;
 }
 
 .col {
@@ -45,12 +45,19 @@ body {
   overflow: hidden;
   font-weight: bold;
   cursor: pointer;
-  font-size: 4rem;
+  font-size: 5.8rem;
 }
 
 .col span {
   position: absolute;
   display: inline-block;
+  color: #fff;
+  // background-color: #474747;
+  // color: transparent;
+  // text-shadow: 2px 2px 3px rgba(75, 153, 160, 0.8);
+  // -webkit-background-clip: text;
+  // -moz-background-clip: text;
+  // background-clip: text;
 }
 
 .col:hover {
@@ -65,7 +72,7 @@ body {
   font-size: 2.1rem;
   outline: none;
   background-color: transparent;
-  border: 5px solid #fff;
-  color: #fff;
+  border: 5px solid #f4f7f7;
+  color: #f4f7f7;
   padding: 0.6em 1.2em;
 }
