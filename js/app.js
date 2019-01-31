@@ -14,6 +14,7 @@
       }
 
       model.board[row][col] = model.currentPlayer ? 'X' : 'O';
+      controller.updateTotalPlays();
     },
     toggleCurrentPlayer: () => (model.currentPlayer = +!model.currentPlayer),
     updateTotalPlays: () => model.totalPlays++,
@@ -57,7 +58,6 @@
             }
 
             controller.checkBox(rowNumber, colNumber);
-            controller.updateTotalPlays();
 
             if (model.totalPlays > 4) {
               if (weHaveAwinner(model)) {
@@ -74,10 +74,8 @@
 
           row.appendChild(col);
         }
-
         fragment.appendChild(row);
       }
-
       board.appendChild(fragment);
     };
 
