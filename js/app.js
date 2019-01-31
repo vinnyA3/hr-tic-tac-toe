@@ -1,21 +1,22 @@
 (function({ helpers }) {
   var model = {
-    board: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-    XO: 0,
+    board: [['', '', ''], ['', '', ''], ['', '', '']],
+    currentPlayer: 0,
   };
 
   var controller = {
     checkBox: function(row, col) {
-      const cell = model.board[row][col];
+      let cell = model.board[row][col];
+
       if (+!!cell) {
         return;
       }
 
-      model.board[row][col] = model.XO ? 1 : 2;
+      model.board[row][col] = model.currentPlayer ? 'X' : 'O';
       console.log(JSON.stringify(model));
     },
     toggleXO: function() {
-      model.XO = +!model.XO;
+      model.currentPlayer = +!model.currentPlayer;
     },
     init: () => {
       view.init();
@@ -41,12 +42,12 @@
             const colNumber = parseInt(target.dataset.col);
 
             if (this.textContent === '') {
-              this.textContent = +!model.XO ? 'X' : 'O';
+              this.textContent = +!model.currentPlayer ? 'X' : 'O';
               controller.toggleXO();
             }
 
             controller.checkBox(rowNumber, colNumber);
-            helpers.checkForWinningRow(model.board);
+            helpers.checkForWinner(model);
           });
           row.appendChild(col);
         }
