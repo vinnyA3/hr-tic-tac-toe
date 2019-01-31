@@ -23,7 +23,10 @@
       model.board = [['', '', ''], ['', '', ''], ['', '', '']];
       view.resetView();
     },
-    initialize: () => view.init(),
+    initialize: () => {
+      resetButtonView.init();
+      view.init();
+    },
   };
 
   var view = (() => {
@@ -46,8 +49,10 @@
             const rowNumber = parseInt(target.parentNode.dataset.row);
             const colNumber = parseInt(target.dataset.col);
 
-            if (this.textContent === '') {
-              this.textContent = +!model.currentPlayer ? 'X' : 'O';
+            if (this.childElementCount === 0) {
+              const cellValue = document.createElement('span');
+              cellValue.textContent = +!model.currentPlayer ? 'X' : 'O';
+              this.appendChild(cellValue);
               controller.toggleCurrentPlayer();
             }
 
@@ -84,6 +89,21 @@
     return {
       init,
       resetView,
+    };
+  })();
+
+  var resetButtonView = (() => {
+    const button = document.getElementById('resetButton');
+    const init = () => {
+      button.addEventListener('click', e => {
+        if (model.totalPlays > 0) {
+          controller.resetGame();
+        }
+      });
+    };
+
+    return {
+      init,
     };
   })();
 
