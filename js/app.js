@@ -1,31 +1,35 @@
-(function({ helpers }) {
+(({ weHaveAwinner }) => {
   var model = {
     board: [['', '', ''], ['', '', ''], ['', '', '']],
     currentPlayer: 0,
+    totalPlays: 0,
   };
 
   var controller = {
-    checkBox: function(row, col) {
+    checkBox: (row, col) => {
       let cell = model.board[row][col];
 
-      if (+!!cell) {
-        return;
+      if (cell !== '') {
+        return void 0;
       }
 
       model.board[row][col] = model.currentPlayer ? 'X' : 'O';
-      console.log(JSON.stringify(model));
     },
-    toggleXO: function() {
-      model.currentPlayer = +!model.currentPlayer;
+    toggleCurrentPlayer: () => (model.currentPlayer = +!model.currentPlayer),
+    updateTotalPlays: () => model.totalPlays++,
+    resetGame: () => {
+      model.currentPlayer = 0;
+      model.totalPlays = 0;
+      model.board = [['', '', ''], ['', '', ''], ['', '', '']];
+      view.resetView();
     },
-    init: () => {
-      view.init();
-    },
+    initialize: () => view.init(),
   };
 
-  var view = (function() {
+  var view = (() => {
     const board = document.getElementById('board');
-    const init = function() {
+
+    const init = () => {
       const fragment = document.createDocumentFragment();
 
       for (let i = 0; i < 3; i++) {
@@ -37,18 +41,32 @@
           const col = document.createElement('div');
           col.classList.add('col');
           col.dataset.col = j;
+
           col.addEventListener('click', function({ target }) {
             const rowNumber = parseInt(target.parentNode.dataset.row);
             const colNumber = parseInt(target.dataset.col);
 
             if (this.textContent === '') {
               this.textContent = +!model.currentPlayer ? 'X' : 'O';
-              controller.toggleXO();
+              controller.toggleCurrentPlayer();
             }
 
             controller.checkBox(rowNumber, colNumber);
-            helpers.checkForWinner(model);
+            controller.updateTotalPlays();
+
+            if (model.totalPlays > 4) {
+              if (weHaveAwinner(model)) {
+                alert(`Winner: ${model.currentPlayer ? 'X' : 'O'}`);
+                controller.resetGame();
+              }
+            }
+
+            if (model.totalPlays === 9) {
+              alert('It is a tie!');
+              controller.resetGame();
+            }
           });
+
           row.appendChild(col);
         }
 
@@ -58,10 +76,17 @@
       board.appendChild(fragment);
     };
 
+    const resetView = () => {
+      while (board.firstChild) board.removeChild(board.firstChild);
+      view.init();
+    };
+
     return {
       init,
+      resetView,
     };
   })();
 
-  controller.init();
-})(window);
+  // initialize / seed the view
+  controller.initialize();
+})(window.helpers);
