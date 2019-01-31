@@ -92,13 +92,10 @@
 
   var resetButtonView = (() => {
     const button = document.getElementById('resetButton');
-    const init = () => {
-      button.addEventListener('click', e => {
-        if (model.totalPlays > 0) {
-          controller.resetGame();
-        }
-      });
-    };
+    const init = () =>
+      button.addEventListener('click', e =>
+        model.totalPlays > 0 ? controller.resetGame() : void 0
+      );
 
     return {
       init,
